@@ -1,6 +1,30 @@
 const defaultResult = 0;
 let currentResult = defaultResult;
 let logEntries = [];
+let mathOperator;
+
+function calcResult(operatorType) {
+    const enteredNum = getInputValue();
+    if(!enteredNum) {
+        return;
+    }
+    const initialValue = currentResult;
+    if(operatorType === 'ADD') {
+        currentResult +=  enteredNum;
+        mathOperator = '+'
+    } else if(operatorType === 'SUBTRACT') {
+        currentResult -=  enteredNum;
+        mathOperator = '-'
+    } else if(operatorType === 'MULTIPLY') {
+        currentResult *=  enteredNum;
+        mathOperator = '*'
+    } else if(operatorType === 'DIVIDE') {
+        currentResult /=  enteredNum;
+        mathOperator = '/'
+    }
+    printResult(mathOperator, initialValue, enteredNum); 
+    logInOperands(operatorType, initialValue, enteredNum, currentResult);
+}
 
 function getInputValue() {
     return +userInput.value;
@@ -23,35 +47,19 @@ function logInOperands(operator, oldRes, operand, newRes) {
 }
 
 function add() {
-    const enteredNum = getInputValue();
-    const initialValue = currentResult;
-    currentResult +=  enteredNum;
-    printResult('+', initialValue, enteredNum); 
-    logInOperands('ADD', initialValue, enteredNum, currentResult);
+    calcResult('ADD');
 }
 
 function substract() {
-    const enteredNum = getInputValue();
-    const initialValue = currentResult;
-    currentResult -=  enteredNum;
-    printResult('-', initialValue, enteredNum); 
-    logInOperands('SUBTRACT', initialValue, enteredNum, currentResult);
+    calcResult('SUBTRACT');
 }
 
 function divide() {
-    const enteredNum = getInputValue();
-    const initialValue = currentResult;
-    currentResult /= enteredNum;
-    printResult('/', initialValue, enteredNum); 
-    logInOperands('DIVIDE', initialValue, enteredNum, currentResult);
+    calcResult('DIVIDE');
 }
 
 function multiply() {
-    const enteredNum = getInputValue();
-    const initialValue = currentResult;
-    currentResult *= enteredNum;
-    printResult('*', initialValue, enteredNum); 
-    logInOperands('MULTIPLY', initialValue, enteredNum, currentResult);
+    calcResult('MULTIPLY');
 }
 
 addBtn.addEventListener('click', add);
